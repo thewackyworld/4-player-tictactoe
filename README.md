@@ -1,5 +1,7 @@
 # 4-Player Tic-Tac-Toe 🎮
 
+![Screenshot](image.png)
+
 A real-time, online 4-player version of classic Tic-Tac-Toe built with Node.js, Express, and Socket.io. 
 
 ## The Story
