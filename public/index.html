@@ -11,7 +11,31 @@
 <body>
     <div class="container">
         <h1>4-Player Tic-Tac-Toe</h1>
-        <div id="game-board"></div>
+
+        <div id="lobby-screen">
+            <div class="lobby-card">
+                <h2>Create a Game</h2>
+                <button id="create-btn" class="primary-btn">Create New Room</button>
+            </div>
+
+            <div class="lobby-divider">OR</div>
+
+            <div class="lobby-card">
+                <h2>Join a Game</h2>
+                <input type="text" id="room-code-input" placeholder="Enter Room Code" maxlength="6">
+                <button id="join-btn" class="secondary-btn">Join Room</button>
+            </div>
+        </div>
+
+        <div id="game-screen" class="hidden">
+            <div class="room-info">
+                Room Code: <span id="display-room-code"></span>
+            </div>
+            <div id="game-board"></div>
+        </div>
+        <div id="win-notification" class="hidden">
+            <h2 id="win-message"></h2>
+        </div>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>

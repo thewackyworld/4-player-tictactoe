@@ -1,6 +1,39 @@
 const socket = io();
 
+// UI Elements
+const lobbyScreen = document.getElementById('lobby-screen');
+const gameScreen = document.getElementById('game-screen');
 const board = document.getElementById('game-board');
+const createBtn = document.getElementById('create-btn');
+const joinBtn = document.getElementById('join-btn');
+const roomCodeInput = document.getElementById('room-code-input');
+const displayRoomCode = document.getElementById('display-room-code');
+
+let currentRoomCode = null;
+
+// Lobby Interaction
+createBtn.addEventListener('click', () => {
+    socket.emit('createRoom');
+});
+
+joinBtn.addEventListener('click', () => {
+    const code = roomCodeInput.value.trim().toUpperCase();
+    if (code) {
+        socket.emit('joinRoom', code);
+    }
+});
+
+// Socket logic for Rooms
+socket.on('roomJoined', (roomCode) => {
+    currentRoomCode = roomCode;
+    displayRoomCode.innerText = roomCode;
+    lobbyScreen.classList.add('hidden');
+    gameScreen.classList.remove('hidden');
+});
+
+socket.on('roomError', (msg) => {
+    alert(msg);
+});
 
 // Create 7x7 grid elements
 for (let i = 0; i < 49; i++) {
@@ -9,8 +42,10 @@ for (let i = 0; i < 49; i++) {
     cell.dataset.index = i;
 
     cell.addEventListener('click', () => {
-        // We'll tell the server which cell was clicked
-        socket.emit('makeMove', i);
+        // Only send if we are in a room
+        if (currentRoomCode) {
+            socket.emit('makeMove', { roomCode: currentRoomCode, cellIndex: i });
+        }
     });
 
     board.appendChild(cell);
@@ -24,4 +59,28 @@ socket.on('moveMade', (data) => {
         cell.innerText = data.playerSymbol;
         cell.classList.add(data.playerColorClass);
     }
+});
+
+socket.on('gameOver', (data) => {
+    const notif = document.getElementById('win-notification');
+    const msg = document.getElementById('win-message');
+    notif.classList.remove('hidden');
+
+    if (data.winnerIndex === -1) {
+        msg.innerText = "It's a Draw!";
+        msg.style.color = "white";
+    } else {
+        msg.innerText = `${data.winnerSymbol} Wins!`;
+    }
+});
+
+socket.on('gameReset', () => {
+    const notif = document.getElementById('win-notification');
+    notif.classList.add('hidden');
+
+    // clear the board UI
+    document.querySelectorAll('.cell').forEach(cell => {
+        cell.innerText = '';
+        cell.className = 'cell'; // reset classes
+    });
 });
