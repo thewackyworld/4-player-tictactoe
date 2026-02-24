@@ -10,10 +10,14 @@ This project was built entirely using **Antigravity**, an advanced AI coding ass
 
 ## Features
 
+- **Game Rooms:** Create or join private game rooms using unique 6-character room codes.
+- **In-Game Chat:** Chat with other players in your room in real-time, with messages color-coded to match player symbols.
 - **Real-Time Multiplayer:** Up to 4 players can connect simultaneously and play together in real-time.
 - **Dynamic Board:** The board automatically adjusts depending on the current game state.
 - **Player Assignments:** Players are automatically assigned unique symbols (X, O, ▲, ■) and colors upon joining.
-- **Spectator Support:** If the game is full, additional users are notified that they cannot join.
+- **Spectator Support:** If the game room is full, additional users are notified that they cannot join.
+
+![Chat feature screenshot](chat.png)
 
 ## Technologies Used
 

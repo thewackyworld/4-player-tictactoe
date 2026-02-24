@@ -193,6 +193,21 @@ io.on('connection', (socket) => {
         }
     });
 
+    socket.on('chatMessage', (data) => {
+        const { roomCode, message } = data;
+        const game = games[roomCode];
+        if (!game) return;
+
+        const pIndex = game.players.indexOf(socket.id);
+        const colorClass = pIndex !== -1 ? colors[pIndex] : null;
+
+        io.to(roomCode).emit('chatMessage', {
+            senderId: socket.id,
+            colorClass,
+            message
+        });
+    });
+
     socket.on('disconnect', () => {
         console.log('user disconnected:', socket.id);
         // Remove from any rooms they were in

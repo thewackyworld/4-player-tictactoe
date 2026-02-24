@@ -31,7 +31,19 @@
             <div class="room-info">
                 Room Code: <span id="display-room-code"></span>
             </div>
-            <div id="game-board"></div>
+            <div class="game-content">
+                <div id="game-board"></div>
+
+                <!-- Chat UI -->
+                <div id="chat-box">
+                    <div id="chat-messages"></div>
+                    <div class="chat-input-group">
+                        <input type="text" id="chat-input" placeholder="Type a message..." maxlength="100"
+                            autocomplete="off">
+                        <button id="chat-send-btn" class="primary-btn">Send</button>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="win-notification" class="hidden">
             <h2 id="win-message"></h2>

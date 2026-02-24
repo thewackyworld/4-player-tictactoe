@@ -8,6 +8,9 @@ const createBtn = document.getElementById('create-btn');
 const joinBtn = document.getElementById('join-btn');
 const roomCodeInput = document.getElementById('room-code-input');
 const displayRoomCode = document.getElementById('display-room-code');
+const chatMessages = document.getElementById('chat-messages');
+const chatInput = document.getElementById('chat-input');
+const chatSendBtn = document.getElementById('chat-send-btn');
 
 let currentRoomCode = null;
 
@@ -83,4 +86,34 @@ socket.on('gameReset', () => {
         cell.innerText = '';
         cell.className = 'cell'; // reset classes
     });
+});
+
+// Chat Logic
+function sendChatMessage() {
+    const msg = chatInput.value.trim();
+    if (msg && currentRoomCode) {
+        socket.emit('chatMessage', { roomCode: currentRoomCode, message: msg });
+        chatInput.value = '';
+    }
+}
+
+chatSendBtn.addEventListener('click', sendChatMessage);
+chatInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') sendChatMessage();
+});
+
+socket.on('chatMessage', (data) => {
+    const { message, colorClass, senderId } = data;
+    const msgEl = document.createElement('div');
+    msgEl.classList.add('chat-message');
+
+    if (senderId === socket.id) {
+        msgEl.classList.add('self');
+    } else {
+        if (colorClass) msgEl.classList.add(colorClass);
+    }
+
+    msgEl.innerText = message;
+    chatMessages.appendChild(msgEl);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
 });
