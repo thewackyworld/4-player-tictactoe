@@ -4,7 +4,7 @@ A real-time, online 4-player version of classic Tic-Tac-Toe built with Node.js, 
 
 ## The Story
 
-This project was built entirely using **Antigravity**, an advanced AI coding assistant from Google. I decided to code this project as a test of its capabilities, and I am very impressed with the results! Antigravity helped architect the server, write the real-time game logic, design the dynamic user interface, and even guided me through the process of publishing it to GitHub. 
+This project was built entirely using **Antigravity**, an advanced AI coding assistant from Google. I decided to code this project as a test of its capabilities, and I am very impressed with the results! Antigravity helped architect the server, write the real-time game logic, design the dynamic user interface, and even guided me through the process of publishing it to GitHub. Even this Readme was written by AI.
 
 ## Features
 
